@@ -11,6 +11,8 @@ import cn.luojunhui.touchfish.config.ConfigService;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +26,9 @@ public class Book {
     private final int PREV = 0;
     private final int NEXT = 1;
     private final int CURRENT = 2;
+
+    private int NEXT_KEY_CODE = 0x28;
+    private int PREV_KEY_CODE = 0x26;
 
     private JPanel book;
     private JTextPane text;
@@ -49,18 +54,46 @@ public class Book {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-                boolean isNext = keyEvent.getKeyCode() == KeyEvent.VK_DOWN;
-                boolean isPrev = keyEvent.getKeyCode() == KeyEvent.VK_UP;
-                if (isNext) {
-                    readText(NEXT);
-                } else if (isPrev) {
-                    readText(PREV);
+                switch (keyEvent.getKeyCode()){
+                    case KeyEvent.VK_DOWN:
+                        readText(NEXT);
+                        break;
+                    case KeyEvent.VK_UP:
+                        readText(PREV);
+                        break;
+                    default:break;
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
             }
+        });
+        this.text.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                switch (e.getButton()){
+                    case MouseEvent.BUTTON1:
+                        readText(NEXT);
+                        break;
+                    case MouseEvent.BUTTON3:
+                        readText(PREV);
+                        break;
+                    case MouseEvent.BUTTON2:
+
+                        break;
+                    default:break;
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) { }
+            @Override
+            public void mouseReleased(MouseEvent e) { }
+            @Override
+            public void mouseEntered(MouseEvent e) { }
+            @Override
+            public void mouseExited(MouseEvent e) { }
         });
     }
 

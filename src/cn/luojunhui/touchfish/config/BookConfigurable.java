@@ -9,10 +9,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * BookConfigurable.class
@@ -108,12 +112,26 @@ public class BookConfigurable implements SearchableConfigurable {
             config.setPage(this.form.getPage());
             config.setPageSize(this.form.getPageSize());
             // 更新文本内容
-            List<String> lines = null;
-            try {
-                lines = Files.readAllLines(Paths.get(config.getBookPath()));
+            List<String> lines = new ArrayList<>();
+
+            String regEx = "\n+";
+            Pattern pattern = Pattern.compile(regEx);
+
+            try (BufferedReader reader = Files.newBufferedReader(Paths.get(config.getBookPath()), StandardCharsets.UTF_8)) {
+                for (;;) {
+                    String line = reader.readLine();
+                    if (line == null){
+                        break;
+                    }else if ("".equals(line) || pattern.matcher(line).matches()){
+                        continue;
+                    }else{
+                        lines.add(line);
+                    }
+                }
                 int totalPage = (lines.size() + config.getPageSize() - 1) / config.getPageSize();
                 config.setTotalPage(totalPage);
-            } catch (IOException e) {
+            }catch (IOException e) {
+                e.printStackTrace();
             }
             config.setLines(lines);
             ConfigService.getInstance().setState(config);
