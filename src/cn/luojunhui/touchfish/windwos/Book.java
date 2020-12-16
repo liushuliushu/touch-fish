@@ -1,5 +1,6 @@
 package cn.luojunhui.touchfish.windwos;
 
+import com.intellij.a.f.Log;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
@@ -9,6 +10,7 @@ import cn.luojunhui.touchfish.config.Config;
 import cn.luojunhui.touchfish.config.ConfigService;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -133,6 +135,9 @@ public class Book {
             default:
                 break;
         }
+        Font fnt=this.text.getFont();
+        this.text.setFont(new Font(fnt.getFamily(),fnt.getStyle(),config.getFontSize()));
+//        System.out.printf("字体大小"+config.getFontSize());
         this.setText(list);
         ConfigService.getInstance().setState(config);
     }

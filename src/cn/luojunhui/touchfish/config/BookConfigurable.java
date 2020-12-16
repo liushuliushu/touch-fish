@@ -111,6 +111,7 @@ public class BookConfigurable implements SearchableConfigurable {
             config.setBookPath(this.form.getBookPath());
             config.setPage(this.form.getPage());
             config.setPageSize(this.form.getPageSize());
+            config.setFontSize(this.form.getFontFieldSize());
             // 更新文本内容
             List<String> lines = new ArrayList<>();
 
@@ -144,6 +145,7 @@ public class BookConfigurable implements SearchableConfigurable {
         this.form.setBookPath(config.getBookPath());
         this.form.setPage(config.getPage());
         this.form.setPageSize(config.getPageSize());
+        this.form.changeFontSize(config.getFontSize());
     }
 
     /**

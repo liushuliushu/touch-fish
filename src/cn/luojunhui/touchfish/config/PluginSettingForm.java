@@ -21,6 +21,8 @@ public class PluginSettingForm {
     private JLabel filePath;
     private JLabel pageSize;
     private JLabel curPage;
+    private JLabel fontSize;
+    private JTextField fontSizeField;
 
     public PluginSettingForm() {
         this.init();
@@ -46,6 +48,7 @@ public class PluginSettingForm {
             this.chooseFileBtn.getTextField().setText(bookPath);
             this.pageSizeTextField.setText(String.valueOf(config.getPageSize()));
             this.pageTextField.setText(String.valueOf(config.getPage()));
+            this.fontSizeField.setText(String.valueOf(config.getFontSize()));
         }
     }
 
@@ -104,6 +107,18 @@ public class PluginSettingForm {
 
     public void setPageSize(int rowCount) {
         this.pageSizeTextField.setText(String.valueOf(rowCount));
+    }
+
+    public int getFontFieldSize() {
+        int rowCount = Integer.valueOf(this.fontSizeField.getText());
+        if (rowCount < 1) {
+            this.changeFontSize(1);
+            return 1;
+        }
+        return rowCount;
+    }
+    public void changeFontSize(int rowCount) {
+        this.fontSizeField.setText(String.valueOf(rowCount));
     }
 
 }

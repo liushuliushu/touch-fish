@@ -21,6 +21,9 @@ public class Config {
     private Integer totalPage = 0;
 
     @OptionTag
+    private Integer fontSize = 20;
+
+    @OptionTag
     private List<String> lines;
 
 
@@ -65,5 +68,13 @@ public class Config {
 
     public void setLines(List<String> lines) {
         this.lines = lines;
+    }
+
+    public Integer getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(Integer fontSize) {
+        this.fontSize = fontSize;
     }
 }
